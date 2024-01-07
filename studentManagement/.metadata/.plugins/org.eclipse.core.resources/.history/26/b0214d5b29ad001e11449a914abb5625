@@ -1,0 +1,8 @@
+package com.app.repository;
+
+import org.springframework.data.repository.CrudRepository;
+
+public interface StudentAddressRepository extends CrudRepository<StudentRepository, Long> {
+	
+
+}

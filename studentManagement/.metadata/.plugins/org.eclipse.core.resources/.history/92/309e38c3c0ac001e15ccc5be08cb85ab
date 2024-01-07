@@ -1,0 +1,64 @@
+package com.app.service;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.app.dto.StudentProfileDTO;
+import com.app.entity.Course;
+import com.app.entity.Student;
+import com.app.repository.CourseRepository;
+import com.app.repository.StudentRepository;
+
+public class StudentServiceImpl implements StudentService{
+	
+	@Autowired
+    private StudentRepository studentRepository;
+
+    @Autowired
+    private CourseRepository courseRepository;
+
+    @Override
+    public Student admitStudent(Student student) {
+        return studentRepository.save(student);
+    }
+
+    @Override
+    public List<Student> getStudentsByCourse(Long courseId) {
+        return studentRepository.findbycourseId(courseId);
+    }
+    
+    
+    @Override
+    public Student updateStudentProfile(Long studentId, StudentProfileDTO studentDTO) {
+        Optional<Student> optionalStudent = studentRepository.findById(studentId);
+        if (optionalStudent.isPresent()) {
+            Student student = optionalStudent.get();
+            // Update the fields from DTO
+            // student.setEmail(studentDTO.getEmail());
+            // student.setMobileNumber(studentDTO.getMobileNumber());
+            // student.setParentsName(studentDTO.getParentsName());
+            // student.setAddress(studentDTO.getAddress());
+            // You need to implement these setters in your Student class
+
+            return studentRepository.save(student);
+        }
+        return null; // or throw an exception
+    }
+
+    @Override
+    public void leaveCourse(Long studentId, Long courseId) {
+        Optional<Student> optionalStudent = studentRepository.findById(studentId);
+        Optional<Course> optionalCourse = courseRepository.findById(courseId);
+
+        if (optionalStudent.isPresent() && optionalCourse.isPresent()) {
+            Student student = optionalStudent.get();
+            Course course = optionalCourse.get();
+            student.getCourses().remove(course);
+            studentRepository.save(student);
+        }
+    }
+
+}

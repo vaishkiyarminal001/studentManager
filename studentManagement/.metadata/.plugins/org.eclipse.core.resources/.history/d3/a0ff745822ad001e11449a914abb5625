@@ -1,0 +1,12 @@
+package com.app.repository;
+
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.app.entity.StudentAddress;
+
+public interface StudentAddressRepository extends JpaRepository<StudentRepository, Long> {
+	List<StudentAddress> findByStudent_Id(Long studentId);
+
+}

@@ -1,0 +1,40 @@
+package com.app.service;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.app.entity.Course;
+import com.app.entity.Student;
+import com.app.repository.CourseRepository;
+import com.app.repository.StudentRepository;
+
+@Service
+public class CourseServiceImpl implements CourseService{
+	
+	@Autowired
+    private CourseRepository courseRepository;
+
+    @Autowired
+    private StudentRepository studentRepository;
+
+    @Override
+    public Course uploadCourseDetails(Course course) {
+        return courseRepository.save(course);
+    }
+
+    @Override
+    public void assignCourses(Long studentId, List<Long> courseIds) {
+        Optional<Student> optionalStudent = studentRepository.findById(studentId);
+
+        if (optionalStudent.isPresent()) {
+            Student student = optionalStudent.get();
+            List<Course> courses = courseRepository.findAllById(courseIds);
+            student.getCourses().addAll(courses);
+            studentRepository.save(student);
+        }
+    }
+
+}
