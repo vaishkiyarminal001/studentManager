@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -27,12 +29,13 @@ public class Student {
     
    
     // student and studentAddress relationship
-    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
     private List<StudentAddress> addresses = new ArrayList<>();
     
     
     // student and course relationship
-    
+    @JsonIgnore
     @ManyToMany
     @JoinTable(
         name = "student_course",
@@ -95,18 +98,8 @@ public class Student {
 		return "Student [studentId=" + studentId + ", name=" + name + ", dateOfBirth=" + dateOfBirth + ", gender="
 				+ gender + ", StudentCode=" + StudentCode + ", addresses=" + addresses + ", courses=" + courses + "]";
 	}
-	public void setAddress(Object address) {
-		// TODO Auto-generated method stub
-		
-	}
-	public void setMobileNumber(Object mobileNumber) {
-		// TODO Auto-generated method stub
-		
-	}
-	public void setEmail(Object email) {
-		// TODO Auto-generated method stub
-		
-	}
+
+	
 	
 	
 	
