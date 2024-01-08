@@ -1,7 +1,6 @@
 # Student Management System
 
 ## Introduction
-<<<<<<< HEAD
 
 This Student Management System is designed to streamline the process of managing students in a school. It includes functionalities for both the Admin/Owner and the Students, providing a user-friendly interface for various operations.
 
